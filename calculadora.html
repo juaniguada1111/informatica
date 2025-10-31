@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Calculadora de Eventos</title>
+  <style>
+    /* Fondo y fuente */
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(135deg, #a8edea, #fed6e3);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    /* Tarjeta principal */
+    .contenedor {
+      background: white;
+      padding: 40px;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+      text-align: center;
+      width: 350px;
+      transition: transform 0.3s;
+    }
+
+    .contenedor:hover {
+      transform: scale(1.03);
+    }
+
+    h1 {
+      color: #444;
+      margin-bottom: 20px;
+    }
+
+    input {
+      width: 80%;
+      padding: 10px;
+      margin: 10px 0;
+      border: 2px solid #ccc;
+      border-radius: 10px;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    input:focus {
+      border-color: #6a11cb;
+    }
+
+    button {
+      background: linear-gradient(90deg, #6a11cb, #2575fc);
+      color: white;
+      padding: 10px 20px;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: linear-gradient(90deg, #2575fc, #6a11cb);
+    }
+
+    #resultado {
+      margin-top: 20px;
+      font-size: 18px;
+      font-weight: 500;
+      color: #333;
+      min-height: 24px;
+    }
+  </style>
+</head>
+<body>
+  <div class="contenedor">
+    <h1>🗓 Calculadora de Eventos</h1>
+
+    <input type="text" id="evento" placeholder="Nombre del evento">
+    <input type="date" id="fecha">
+
+    <br>
+    <button onclick="calcularDias()">Calcular</button>
+
+    <p id="resultado"></p>
+  </div>
+
+  <script>
+    function calcularDias() {
+      const nombreEvento = document.getElementById("evento").value.trim();
+      const fechaEvento = document.getElementById("fecha").value;
+
+      const resultado = document.getElementById("resultado");
+
+      if (!nombreEvento || !fechaEvento) {
+        resultado.textContent = "Por favor, completá todos los campos.";
+        resultado.style.color = "#c0392b";
+        return;
+      }
+
+      const hoy = new Date();
+      const fechaIngresada = new Date(fechaEvento);
+
+      // Calcular diferencia en milisegundos y pasar a días
+      const diferenciaMs = fechaIngresada - hoy;
+      const diasFaltantes = Math.ceil(diferenciaMs / (1000 * 60 * 60 * 24));
+
+      if (diasFaltantes > 0) {
+        resultado.textContent = Faltan ${diasFaltantes} días para ${nombreEvento}.;
+        resultado.style.color = "#2c3e50";
+      } else if (diasFaltantes === 0) {
+        resultado.textContent = ¡hoy es el ${nombreEvento}! 🎉;
+        resultado.style.color = "#16a085";
+      } else {
+        resultado.textContent = El evento "${nombreEvento}" ya ocurrió.;
+        resultado.style.color = "#8e44ad";
+      }
+    }
+  </script>
+</body>
+</html>
